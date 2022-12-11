@@ -1,0 +1,41 @@
+.Counter {
+    background-color: antiquewhite;
+    width: 400px;
+    margin: 100px auto;
+    border: 4px solid grey;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 255px;
+}
+
+.Number {
+    background-color: palevioletred;
+    width: 100%;
+    height: 65%;
+    border-radius: 15px;
+    border: 4px solid palevioletred;
+    font-size: 72px;
+    text-align: center;
+}
+
+.NumberMax {
+    color: white;
+    font-weight: bold;
+}
+
+.ControlSection {
+    margin-top: 10px;
+    border-radius: 15px;
+    width: 100%;
+    height: 45%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Counter Button {
+    background-color: palevioletred;
+}
