@@ -6,13 +6,15 @@ type SettingsType = {
     minValue: number
     setMaxValue: (maxValue: number) => void
     setMinValue: (minValue: number) => void
+    combinedValueGetter: () => void
 }
 
 const Settings: React.FC<SettingsType> = ({
                                               maxValue,
                                               minValue,
                                               setMaxValue,
-                                              setMinValue
+                                              setMinValue,
+                                              combinedValueGetter
                                           }) => {
 
     const maxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,6 @@ const Settings: React.FC<SettingsType> = ({
         setMinValue(JSON.parse(event.currentTarget.value))
     };
 
-
     return (
         <div>
             <h3>Counter Settings</h3>
@@ -31,7 +32,7 @@ const Settings: React.FC<SettingsType> = ({
             <h5>start value <input type="number" value={minValue} onChange={minValueHandler}/></h5>
             <Button
                 name={'set'}
-                onClickCallback={()=>{}}
+                onClickCallback={combinedValueGetter}
             />
         </div>
     );

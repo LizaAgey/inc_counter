@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Button from '../Button/Button';
 import styles from './Counter.module.css'
 import './../../App.css';
@@ -10,16 +10,24 @@ type CounterType = {
     setNumber: (number: number) => void
 }
 
-const Counter: React.FC<any> = ({
-                                    maxValue,
-                                    minValue,
-                                    number,
-                                    setNumber
-                                }) => {
+const Counter: React.FC<CounterType> = ({
+                                            maxValue,
+                                            minValue,
+                                            number,
+                                            setNumber,
+
+                                        }) => {
 
     const incNumber = () => {
+        let maxValueAsStr = localStorage.getItem('maxValue')
+        let newMaxValue
+        if (maxValueAsStr) {
+            newMaxValue = JSON.parse(maxValueAsStr)
+        }
+
+
         let newNumber = number + 1
-        newNumber < maxValue + 1 ? setNumber(newNumber) : setNumber(maxValue)
+        newNumber < newMaxValue + 1 ? setNumber(newNumber) : setNumber(newMaxValue)
     };
 
     const resetNumber = () => {
@@ -29,7 +37,9 @@ const Counter: React.FC<any> = ({
     return (
         <div className={styles.Counter}>
             <h3>Counter</h3>
-            <div className={`${styles.Number} ${number === maxValue ? styles.NumberMax : ''}`}>{number}</div>
+            <div className={`${styles.Number} ${number === maxValue ? styles.NumberMax : ''}`}>
+                {number}
+            </div>
             <div className={styles.ControlSection}>
                 <Button
                     name={'INC'}
@@ -39,7 +49,6 @@ const Counter: React.FC<any> = ({
                 <Button
                     name={'RESET'}
                     onClickCallback={resetNumber}
-                    disabled={number === minValue}
                 />
             </div>
         </div>
