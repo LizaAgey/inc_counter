@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import Button from '../Button/Button';
 
 type SettingsType = {
@@ -6,7 +6,7 @@ type SettingsType = {
     minValue: number
     setMaxValue: (maxValue: number) => void
     setMinValue: (minValue: number) => void
-    combinedValueGetter: () => void
+    saveSettings: () => void
 }
 
 const Settings: React.FC<SettingsType> = ({
@@ -14,7 +14,7 @@ const Settings: React.FC<SettingsType> = ({
                                               minValue,
                                               setMaxValue,
                                               setMinValue,
-                                              combinedValueGetter
+                                              saveSettings
                                           }) => {
 
     const maxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,12 +27,16 @@ const Settings: React.FC<SettingsType> = ({
 
     return (
         <div>
-            <h3>Counter Settings</h3>
-            <h5>max value <input type="number" value={maxValue} onChange={maxValueHandler}/></h5>
-            <h5>start value <input type="number" value={minValue} onChange={minValueHandler}/></h5>
+            <h3>Settings</h3>
+            <h5>max value
+                <input type="number" value={maxValue} onChange={maxValueHandler}/>
+            </h5>
+            <h5>start value
+                <input type="number" value={minValue} onChange={minValueHandler}/>
+            </h5>
             <Button
-                name={'set'}
-                onClickCallback={combinedValueGetter}
+                name={'SET'}
+                onClickCallback={saveSettings}
             />
         </div>
     );

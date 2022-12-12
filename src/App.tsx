@@ -2,51 +2,38 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import Counter from './components/Counter/Counter';
 import Settings from './components/Settings/Settings';
+import {setValueToLS} from './utils/LocaStorageUtils/setValueToLS';
+import {getValueFromLS} from './utils/LocaStorageUtils/getValueFromLS';
 
 function App() {
     const [maxValue, setMaxValue] = useState(0)
     const [minValue, setMinValue] = useState(0)
     const [number, setNumber] = useState(0)
 
-    useEffect(() => getMaxValueFromLS(), [])
-    useEffect(() => getMinValueFromLS(), [])
-    useEffect(() => setMinValueToLS(), [minValue])
-    // useEffect(() => valuesSetter(lsMinValueKey, minValue), [minValue])
+    const setupOnLoad = () => {
+        applyMaxValueFromSettings()
+        applyMinValueFromSettings()
+    };
+
+    useEffect(() => setupOnLoad(), [])
 
     const lsMaxValueKey = 'maxValue'
     const lsMinValueKey = 'minValue'
 
-    const setMaxValueToLS = () => {
-        localStorage.setItem(lsMaxValueKey, JSON.stringify(maxValue))
-    };
-    const setMinValueToLS = () => {
-        localStorage.setItem(lsMinValueKey, JSON.stringify(minValue))
-    };
-    // const valuesSetter = (key: string, value: number) => {
-    //     localStorage.setItem(key, JSON.stringify(value))
-    // };
-
-    const getMaxValueFromLS = () => {
-        let valueAsStr = localStorage.getItem(lsMaxValueKey)
-        if (valueAsStr) {
-            let newValue = JSON.parse(valueAsStr)
-            setMaxValue(newValue)
-        }
-    };
-    const getMinValueFromLS = () => {
-        let valueAsStr = localStorage.getItem(lsMinValueKey)
-        if (valueAsStr) {
-            let newValue = JSON.parse(valueAsStr)
-            setMinValue(newValue)
-            setNumber(newValue)
-        }
+    const applyMaxValueFromSettings = () => {
+        setMaxValue(getValueFromLS(lsMaxValueKey))
     };
 
-    const combinedValueGetter = () => {
-        // valuesSetter(lsMaxValueKey, maxValue)
-        setMaxValueToLS()
-        getMaxValueFromLS()
-        getMinValueFromLS()
+    const applyMinValueFromSettings = () => {
+        setMinValue(getValueFromLS(lsMinValueKey))
+        setNumber(getValueFromLS(lsMinValueKey))
+    };
+
+    const saveSettings = () => {
+        setValueToLS(lsMaxValueKey, maxValue)
+        setValueToLS(lsMinValueKey, minValue)
+        applyMaxValueFromSettings()
+        applyMinValueFromSettings()
     };
 
     return (
@@ -56,10 +43,10 @@ function App() {
                 minValue={minValue}
                 setMaxValue={setMaxValue}
                 setMinValue={setMinValue}
-                combinedValueGetter={combinedValueGetter}
+                saveSettings={saveSettings}
             />
             <Counter
-                maxValue={maxValue}
+                maxValue={getValueFromLS(lsMaxValueKey)}
                 minValue={minValue}
                 number={number}
                 setNumber={setNumber}

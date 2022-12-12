@@ -14,20 +14,11 @@ const Counter: React.FC<CounterType> = ({
                                             maxValue,
                                             minValue,
                                             number,
-                                            setNumber,
-
+                                            setNumber
                                         }) => {
-
     const incNumber = () => {
-        let maxValueAsStr = localStorage.getItem('maxValue')
-        let newMaxValue
-        if (maxValueAsStr) {
-            newMaxValue = JSON.parse(maxValueAsStr)
-        }
-
-
         let newNumber = number + 1
-        newNumber < newMaxValue + 1 ? setNumber(newNumber) : setNumber(newMaxValue)
+        newNumber < maxValue + 1 ? setNumber(newNumber) : setNumber(maxValue)
     };
 
     const resetNumber = () => {
