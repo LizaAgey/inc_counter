@@ -5,51 +5,75 @@ import Settings from './components/Settings/Settings';
 import {setValueToLS} from './utils/LocaStorageUtils/setValueToLS';
 import {getValueFromLS} from './utils/LocaStorageUtils/getValueFromLS';
 
+export type ErrorType = {
+    isMaxError: boolean
+    isMinError: boolean
+}
+
 function App() {
-    const [maxValue, setMaxValue] = useState(0)
-    const [minValue, setMinValue] = useState(0)
+    const [inputMaxValue, setInputMaxValue] = useState(0)
+    const [inputMinValue, setInputMinValue] = useState(0)
     const [number, setNumber] = useState(0)
+    const [error, setError] = useState<ErrorType>({
+        isMaxError: false,
+        isMinError: false
+    })
 
     const setupOnLoad = () => {
         applyMaxValueFromSettings()
         applyMinValueFromSettings()
     };
-
     useEffect(() => setupOnLoad(), [])
+    useEffect(() => checkIfError(), [inputMaxValue])
+    useEffect(() => checkIfError(), [inputMinValue])
 
     const lsMaxValueKey = 'maxValue'
     const lsMinValueKey = 'minValue'
 
     const applyMaxValueFromSettings = () => {
-        setMaxValue(getValueFromLS(lsMaxValueKey))
+        getValueFromLS(lsMaxValueKey) ? setInputMaxValue(getValueFromLS(lsMaxValueKey)) : setInputMaxValue(0)
     };
-
     const applyMinValueFromSettings = () => {
-        setMinValue(getValueFromLS(lsMinValueKey))
-        setNumber(getValueFromLS(lsMinValueKey))
+        getValueFromLS(lsMinValueKey) ? setInputMinValue(getValueFromLS(lsMinValueKey)) : setInputMinValue(0)
+        getValueFromLS(lsMinValueKey) ? setNumber(getValueFromLS(lsMinValueKey)) : setNumber(0)
     };
-
     const saveSettings = () => {
-        setValueToLS(lsMaxValueKey, maxValue)
-        setValueToLS(lsMinValueKey, minValue)
+        setValueToLS(lsMaxValueKey, inputMaxValue)
+        setValueToLS(lsMinValueKey, inputMinValue)
         applyMaxValueFromSettings()
         applyMinValueFromSettings()
+    };
+
+
+    const checkIfError = () => {
+        if (inputMinValue === inputMaxValue || inputMinValue > inputMaxValue) {
+            setError({isMaxError: true, isMinError: true})
+        } else if (inputMinValue < 0) {
+            setError({isMaxError: inputMaxValue === inputMinValue || inputMaxValue < 0, isMinError: true})
+        } else if (inputMaxValue < 0) {
+            setError({isMinError: inputMaxValue === inputMinValue || inputMaxValue < 0, isMaxError: true})
+        } else {
+            setError({isMaxError: false, isMinError: false})
+        }
     };
 
     return (
         <div className={'App'}>
             <Settings
-                maxValue={maxValue}
-                minValue={minValue}
-                setMaxValue={setMaxValue}
-                setMinValue={setMinValue}
+                inputMaxValue={inputMaxValue}
+                inputMinValue={inputMinValue}
+                setInputMaxValue={setInputMaxValue}
+                setInputMinValue={setInputMinValue}
                 saveSettings={saveSettings}
+                error={error}
             />
             <Counter
-                maxValue={getValueFromLS(lsMaxValueKey)}
-                minValue={minValue}
+                lsMaxValue={getValueFromLS(lsMaxValueKey)}
+                inputMinValue={inputMinValue}
+                inputMaxValue={inputMaxValue}
                 number={number}
                 setNumber={setNumber}
+                error={error}
             />
         </div>
     );

@@ -2,40 +2,47 @@ import React from 'react';
 import Button from '../Button/Button';
 import styles from './Counter.module.css'
 import './../../App.css';
+import {ErrorType} from '../../App';
 
 type CounterType = {
-    maxValue: number
-    minValue: number
+    lsMaxValue: number
+    inputMinValue: number
+    inputMaxValue: number
     number: number
     setNumber: (number: number) => void
+    error: ErrorType
 }
 
 const Counter: React.FC<CounterType> = ({
-                                            maxValue,
-                                            minValue,
+                                            lsMaxValue,
+                                            inputMinValue,
+                                            inputMaxValue,
                                             number,
-                                            setNumber
+                                            setNumber,
+                                            error
                                         }) => {
     const incNumber = () => {
         let newNumber = number + 1
-        newNumber < maxValue + 1 ? setNumber(newNumber) : setNumber(maxValue)
+        newNumber < lsMaxValue + 1 ? setNumber(newNumber) : setNumber(lsMaxValue)
     };
-
     const resetNumber = () => {
-        setNumber(minValue)
+        setNumber(inputMinValue)
     };
+    const isInputError = error.isMaxError || error.isMinError
+    const isDisabled = number === lsMaxValue || error.isMaxError || error.isMinError
 
     return (
         <div className={styles.Counter}>
             <h3>Counter</h3>
-            <div className={`${styles.Number} ${number === maxValue ? styles.NumberMax : ''}`}>
-                {number}
+            <div
+                className={`${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''} ${isInputError ? styles.error : ''}`}>
+                <span>{isInputError ? 'Please enter correct value' : number}</span>
             </div>
             <div className={styles.ControlSection}>
                 <Button
                     name={'INC'}
                     onClickCallback={incNumber}
-                    disabled={number === maxValue}
+                    disabled={isDisabled}
                 />
                 <Button
                     name={'RESET'}
