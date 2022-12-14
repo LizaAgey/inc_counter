@@ -7,19 +7,19 @@ import {ErrorType} from '../../App';
 type CounterType = {
     lsMaxValue: number
     inputMinValue: number
-    inputMaxValue: number
     number: number
     setNumber: (number: number) => void
     error: ErrorType
+    isSettingsSaved: boolean
 }
 
 const Counter: React.FC<CounterType> = ({
                                             lsMaxValue,
                                             inputMinValue,
-                                            inputMaxValue,
                                             number,
                                             setNumber,
-                                            error
+                                            error,
+                                            isSettingsSaved
                                         }) => {
     const incNumber = () => {
         let newNumber = number + 1
@@ -29,14 +29,23 @@ const Counter: React.FC<CounterType> = ({
         setNumber(inputMinValue)
     };
     const isInputError = error.isMaxError || error.isMinError
-    const isDisabled = number === lsMaxValue || error.isMaxError || error.isMinError
+    const isDisabled = number === lsMaxValue || error.isMaxError || error.isMinError || !isSettingsSaved
+    const numberStyles = `${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''} ${isInputError || !isSettingsSaved ? styles.warning : ''}`
+    const displaySection = () => {
+        if (isInputError) {
+            return error.errorMessage
+        } else if (isSettingsSaved) {
+            return number
+        } else if (!isSettingsSaved) {
+            return "Please save settings"
+        }
+    }
 
     return (
         <div className={styles.Counter}>
             <h3>Counter</h3>
-            <div
-                className={`${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''} ${isInputError ? styles.error : ''}`}>
-                <span>{isInputError ? 'Please enter correct value' : number}</span>
+            <div className={numberStyles}>
+                <span className={numberStyles}>{displaySection()}</span>
             </div>
             <div className={styles.ControlSection}>
                 <Button
