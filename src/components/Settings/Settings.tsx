@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import styles from './Settings.module.css'
 import {ErrorType} from '../../App';
 import Input from '../Input/Input';
+import {NavLink} from 'react-router-dom';
 
 type SettingsType = {
     inputMaxValue: number
@@ -45,7 +46,9 @@ const Settings: React.FC<SettingsType> = ({
     const isDisabled = error.isMinError || error.isMaxError
 
     return (
+
         <div className={styles.settings}>
+
             <h3>Settings</h3>
             <h5>Max value
                 <Input
@@ -59,11 +62,14 @@ const Settings: React.FC<SettingsType> = ({
                     onChange={minValueHandler}
                     className={error.isMinError ? styles.error : ''}/>
             </h5>
-            <Button
+            <NavLink to={'/counter'}>
+                <Button
                 name={'SAVE'}
                 onClickCallback={saveSettings}
                 disabled={isDisabled}
             />
+            </NavLink>
+
         </div>
     );
 };

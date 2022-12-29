@@ -4,6 +4,7 @@ import Counter from './components/Counter/Counter';
 import Settings from './components/Settings/Settings';
 import {setValueToLS} from './utils/LocaStorageUtils/setValueToLS';
 import {getValueFromLS} from './utils/LocaStorageUtils/getValueFromLS';
+import {BrowserRouter, NavLink, Route, Routes} from 'react-router-dom';
 
 export type ErrorType = {
     isMaxError: boolean
@@ -70,27 +71,36 @@ function App() {
     };
 
     return (
-            <div className={'App'}>
-                <Settings
-                    inputMaxValue={inputMaxValue}
-                    inputMinValue={inputMinValue}
-                    setInputMaxValue={setInputMaxValue}
-                    setInputMinValue={setInputMinValue}
-                    saveSettings={saveSettings}
-                    error={error}
-                    setError={setError}
-                    setSettingsSaved={setSettingsSaved}
-                />
-                <Counter
-                    lsMaxValue={getValueFromLS(lsMaxValueKey)}
-                    inputMinValue={inputMinValue}
-                    number={number}
-                    setNumber={setNumber}
-                    error={error}
-                    isSettingsSaved={isSettingsSaved}
+        <BrowserRouter>
 
-                />
+            <div className={'App'}>
+
+                <Routes >
+                    <Route  path="/counter" element={<Counter
+                        lsMaxValue={getValueFromLS(lsMaxValueKey)}
+                        inputMinValue={inputMinValue}
+                        number={number}
+                        setNumber={setNumber}
+                        error={error}
+                        isSettingsSaved={isSettingsSaved}
+
+                    />}/>
+                    <Route path={"/"} element={<Settings
+                        inputMaxValue={inputMaxValue}
+                        inputMinValue={inputMinValue}
+                        setInputMaxValue={setInputMaxValue}
+                        setInputMinValue={setInputMinValue}
+                        saveSettings={saveSettings}
+                        error={error}
+                        setError={setError}
+                        setSettingsSaved={setSettingsSaved}
+                    />}/>
+                </Routes>
+
+
+
             </div>
+        </BrowserRouter>
     );
 }
 

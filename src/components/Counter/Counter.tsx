@@ -3,6 +3,7 @@ import Button from '../Button/Button';
 import styles from './Counter.module.css'
 import './../../App.css';
 import {ErrorType} from '../../App';
+import {NavLink} from 'react-router-dom';
 
 type CounterType = {
     lsMaxValue: number
@@ -37,7 +38,7 @@ const Counter: React.FC<CounterType> = ({
         } else if (isSettingsSaved) {
             return number
         } else if (!isSettingsSaved) {
-            return "Please save settings"
+            return 'Please save settings'
         }
     }
 
@@ -59,6 +60,11 @@ const Counter: React.FC<CounterType> = ({
                     name={'RESET'}
                     onClickCallback={resetNumber}
                 />
+                <NavLink to={'/'}>
+                    <Button
+                        name={'to settings'}
+                    />
+                </NavLink>
             </div>
         </div>
     );

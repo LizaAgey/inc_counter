@@ -3,13 +3,13 @@ import styles from './Button.module.css'
 
 type ButtonType = {
     name: string,
-    onClickCallback: () => void
+    onClickCallback?: () => void
     disabled?: boolean
 }
 
 const Button: React.FC<ButtonType> = (props) => {
     const onClickHandler = () => {
-        props.onClickCallback()
+        props.onClickCallback && props.onClickCallback()
     };
 
     return (
