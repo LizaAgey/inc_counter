@@ -1,20 +1,20 @@
 import React, {ChangeEvent} from 'react';
-import styles from "./Input.module.css"
 
 type InputType = {
-    setTitle: (title: string) => void,
-    title: string
+    value: number
+    className: string
+    onChange: (event: ChangeEvent<HTMLInputElement>)=>void
 }
 
 const Input: React.FC<InputType> = (props) => {
-    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        props.setTitle(event.currentTarget.value)
-    }
+
 
     return (
-        <div>
-            <input onChange={onChangeHandler} value={props.title} className={styles.input}/>
-        </div>
+        <input
+            type="number"
+            onChange={props.onChange}
+            value={props.value}
+            className={props.className}/>
     );
 };
 

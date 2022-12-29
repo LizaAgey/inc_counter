@@ -45,7 +45,9 @@ const Counter: React.FC<CounterType> = ({
         <div className={styles.Counter}>
             <h3>Counter</h3>
             <div className={numberStyles}>
-                <span className={numberStyles}>{displaySection()}</span>
+                <span className={numberStyles}>
+                    {displaySection()}
+                </span>
             </div>
             <div className={styles.ControlSection}>
                 <Button

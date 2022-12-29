@@ -2,6 +2,7 @@ import React, {ChangeEvent} from 'react';
 import Button from '../Button/Button';
 import styles from './Settings.module.css'
 import {ErrorType} from '../../App';
+import Input from '../Input/Input';
 
 type SettingsType = {
     inputMaxValue: number
@@ -47,12 +48,16 @@ const Settings: React.FC<SettingsType> = ({
         <div className={styles.settings}>
             <h3>Settings</h3>
             <h5>Max value
-                <input type="number" value={inputMaxValue} onChange={maxValueHandler}
-                       className={error.isMaxError ? styles.error : ''}/>
+                <Input
+                    value={inputMaxValue}
+                    onChange={maxValueHandler}
+                    className={error.isMaxError ? styles.error : ''}/>
             </h5>
             <h5>Min value
-                <input type="number" value={inputMinValue} onChange={minValueHandler}
-                       className={error.isMinError ? styles.error : ''}/>
+                <Input
+                    value={inputMinValue}
+                    onChange={minValueHandler}
+                    className={error.isMinError ? styles.error : ''}/>
             </h5>
             <Button
                 name={'SAVE'}
