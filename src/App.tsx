@@ -92,7 +92,6 @@ function App() {
                         setInputMinValue={setInputMinValue}
                         saveSettings={saveSettings}
                         error={error}
-                        setError={setError}
                         setSettingsSaved={setSettingsSaved}
                     />}/>
                 </Routes>

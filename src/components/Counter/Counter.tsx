@@ -29,25 +29,15 @@ const Counter: React.FC<CounterType> = ({
     const resetNumber = () => {
         setNumber(inputMinValue)
     };
-    const isInputError = error.isMaxError || error.isMinError
     const isDisabled = number === lsMaxValue || error.isMaxError || error.isMinError || !isSettingsSaved
-    const numberStyles = `${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''} ${isInputError || !isSettingsSaved ? styles.warning : ''}`
-    const displaySection = () => {
-        if (isInputError) {
-            return error.errorMessage
-        } else if (isSettingsSaved) {
-            return number
-        } else if (!isSettingsSaved) {
-            return 'Please save settings'
-        }
-    }
+    const numberStyles = `${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''}`
 
     return (
         <div className={styles.Counter}>
             <h3>Counter</h3>
             <div className={numberStyles}>
                 <span className={numberStyles}>
-                    {displaySection()}
+                    {number}
                 </span>
             </div>
             <div className={styles.ControlSection}>

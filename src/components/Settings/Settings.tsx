@@ -12,7 +12,6 @@ type SettingsType = {
     setInputMinValue: (minValue: number) => void
     saveSettings: () => void
     error: ErrorType
-    setError: (error: ErrorType) => void
     setSettingsSaved: (isSaved: boolean) => void
 }
 
@@ -23,23 +22,16 @@ const Settings: React.FC<SettingsType> = ({
                                               setInputMinValue,
                                               saveSettings,
                                               error,
-                                              setError,
                                               setSettingsSaved
                                           }) => {
 
     const maxValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputMaxValue(JSON.parse(event.currentTarget.value))
-        if (!error.isMaxError && !error.isMinError) {
-            setError({...error, errorMessage: 'Please save changes'})
-        }
         setSettingsSaved(false)
     };
 
     const minValueHandler = (event: ChangeEvent<HTMLInputElement>) => {
         setInputMinValue(JSON.parse(event.currentTarget.value))
-        if (!error.isMaxError && !error.isMinError) {
-            setError({...error, errorMessage: 'Please save changes'})
-        }
         setSettingsSaved(false)
     };
 
@@ -49,7 +41,7 @@ const Settings: React.FC<SettingsType> = ({
 
         <div className={styles.settings}>
 
-            <h3>Settings</h3>
+            <h3>Counter Settings</h3>
             <h5>Max value
                 <Input
                     value={inputMaxValue}
