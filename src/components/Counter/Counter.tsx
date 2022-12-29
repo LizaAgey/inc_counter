@@ -1,8 +1,7 @@
 import React from 'react';
-import Button from '../Button/Button';
-import styles from './Counter.module.css'
 import './../../App.css';
 import {ErrorType} from '../../App';
+import {Button, Paper, Typography} from '@mui/material';
 
 type CounterType = {
     lsMaxValue: number
@@ -30,37 +29,29 @@ const Counter: React.FC<CounterType> = ({
     };
     const isInputError = error.isMaxError || error.isMinError
     const isDisabled = number === lsMaxValue || error.isMaxError || error.isMinError || !isSettingsSaved
-    const numberStyles = `${styles.Number} ${number === lsMaxValue ? styles.NumberMax : ''} ${isInputError || !isSettingsSaved ? styles.warning : ''}`
     const displaySection = () => {
         if (isInputError) {
             return error.errorMessage
         } else if (isSettingsSaved) {
             return number
         } else if (!isSettingsSaved) {
-            return "Please save settings"
+            return 'Please save settings'
         }
     }
 
     return (
-        <div className={styles.Counter}>
-            <h3>Counter</h3>
-            <div className={numberStyles}>
-                <span className={numberStyles}>
+        <Paper elevation={5} className={"section"}>
+            <Typography variant={"h4"} sx={{m:"10px"}}>Counter</Typography>
+            <Paper sx={{m:"25px"}}>
+                <Typography variant={"h6"} sx={{m:"25px", width:"250px"}} align={"center"}>
                     {displaySection()}
-                </span>
+                </Typography>
+            </Paper>
+            <div >
+                <Button variant={"contained"} sx={{mr:"15px"}} onClick={incNumber} disabled={isDisabled}>Increment</Button>
+                <Button variant={"contained"} onClick={resetNumber}>Reset</Button>
             </div>
-            <div className={styles.ControlSection}>
-                <Button
-                    name={'INC'}
-                    onClickCallback={incNumber}
-                    disabled={isDisabled}
-                />
-                <Button
-                    name={'RESET'}
-                    onClickCallback={resetNumber}
-                />
-            </div>
-        </div>
+        </Paper>
     );
 };
 

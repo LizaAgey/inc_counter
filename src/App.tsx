@@ -88,7 +88,6 @@ function App() {
                     setNumber={setNumber}
                     error={error}
                     isSettingsSaved={isSettingsSaved}
-
                 />
             </div>
     );

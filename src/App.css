@@ -1,8 +1,15 @@
 .App {
     display: flex;
 }
-
-h3 {
-    margin: 0 0 5px;
+.section {
+    width: 400px;
+    margin: 100px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 255px;
+    font-size: 1.17em;
 }
+
 

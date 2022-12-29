@@ -1,8 +1,7 @@
 import React, {ChangeEvent} from 'react';
-import Button from '../Button/Button';
-import styles from './Settings.module.css'
 import {ErrorType} from '../../App';
-import Input from '../Input/Input';
+import {Button, Input, Paper, Typography} from '@mui/material';
+
 
 type SettingsType = {
     inputMaxValue: number
@@ -45,26 +44,30 @@ const Settings: React.FC<SettingsType> = ({
     const isDisabled = error.isMinError || error.isMaxError
 
     return (
-        <div className={styles.settings}>
-            <h3>Settings</h3>
-            <h5>Max value
+        <Paper className={"section"} elevation={5}>
+            <Typography variant={"h4"} sx={{m:"15px"}}>Settings</Typography>
+            <Typography variant={"h6"} sx={{m:"15px"}}>Max value
                 <Input
+                    sx={{width:"45px", ml:"5px", pl:"15px"}}
+                    type="number"
                     value={inputMaxValue}
                     onChange={maxValueHandler}
-                    className={error.isMaxError ? styles.error : ''}/>
-            </h5>
-            <h5>Min value
+                    error={error.isMaxError}/>
+            </Typography>
+            <Typography variant={"h6"} sx={{m:"15px"}}>Min value
                 <Input
+                    sx={{width:"45px", ml:"5px", pl:"15px"}}
+                    type="number"
                     value={inputMinValue}
                     onChange={minValueHandler}
-                    className={error.isMinError ? styles.error : ''}/>
-            </h5>
+                    error={error.isMinError}/>
+            </Typography>
             <Button
-                name={'SAVE'}
-                onClickCallback={saveSettings}
+                variant={"contained"}
+                onClick={saveSettings}
                 disabled={isDisabled}
-            />
-        </div>
+            >Save</Button>
+        </Paper>
     );
 };
 
